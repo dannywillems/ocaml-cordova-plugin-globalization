@@ -14,7 +14,7 @@ type selector =
 
 [@@@js.stop]
 val short : format_length
-val media : format_length
+val medium : format_length
 val long : format_length
 val full : format_length
 
@@ -150,8 +150,10 @@ class parameter_date_pattern : Ojs.t ->
 
     method pattern : string
     method timezone : string
-    method utf_offset : int
+    method utc_offset : int
+    [@@js.get "utc_offset"]
     method dst_offset : int
+    [@@js.get "dst_offset"]
   end
 (* -------------------------------------------------------------------------- *)
 
