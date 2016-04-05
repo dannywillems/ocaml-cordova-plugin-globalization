@@ -31,6 +31,6 @@ The binding has not been tested but it compiles.
 
 ## How to use ?
 
-You need to have the date binding. See [this binding](https://github.com/dannywillems/ocaml-js-stdlib) to the ocaml standard javascript library.
+* You need to have the date binding. See [this binding](https://github.com/dannywillems/ocaml-js-stdlib) to the ocaml standard javascript library.
 
-TODO
+* Each method needs an error callback. In the cordova plugin, this callback takes a GlobalizationError object but it doesn't in the binding because this object contains only one error code which is specific to the method.
