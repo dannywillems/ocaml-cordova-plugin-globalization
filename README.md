@@ -43,7 +43,7 @@ opam pin add cordova-plugin-globalization https://github.com/dannywillems/ocaml-
 
 and to compile your project, use
 ```Shell
-ocamlfind ocamlc -c -o [output_file] -package gen_js_api -package cordova-plugin-globalization [...] -linkpkg [other arguments]
+ocamlfind ocamlc -c -o [output_file] -package gen_js_api -package ocaml-js-stdlib -package cordova-plugin-globalization [...] -linkpkg [other arguments]
 ```
 
 Don't forget to install the cordova plugin globalization with
