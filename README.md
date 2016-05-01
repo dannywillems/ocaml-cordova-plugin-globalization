@@ -33,7 +33,7 @@ The binding has not been tested but it compiles.
 
 Don't forget to switch to a compiler **>= 4.03.0**.
 ```Shell
-opam switch 4.03.0+beta1
+opam switch 4.03.0
 ```
 
 You can use opam by pinning the repository with
