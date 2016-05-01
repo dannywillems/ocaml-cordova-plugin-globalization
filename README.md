@@ -1,5 +1,8 @@
 # ocaml-cordova-plugin-globalization
 
+[![LGPL-v3 licensed](https://img.shields.io/badge/license-LGPLv3-blue.svg)](https://raw.githubusercontent.com/dannywillems/ocaml-cordova-plugin-globalization/master/LICENSE)
+[![Build Status](https://travis-ci.org/dannywillems/ocaml-cordova-plugin-globalization.svg?branch=master)](https://travis-ci.org/dannywillems/ocaml-cordova-plugin-globalization)
+
 Binding to
 [cordova-plugin-globalization](https://github.com/apache/cordova-plugin-globalization)
 
