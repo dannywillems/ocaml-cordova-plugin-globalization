@@ -6,10 +6,6 @@
 Binding to
 [cordova-plugin-globalization](https://github.com/apache/cordova-plugin-globalization)
 
-[Example
-application](https://github.com/dannywillems/ocaml-cordova-plugin-globalization-example).
-**Not developed**
-
 ## What does cordova-plugin-globalization do ?
 
 ```
