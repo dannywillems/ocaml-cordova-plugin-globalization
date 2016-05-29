@@ -34,7 +34,7 @@ eval `opam config env`
 export OCAMLRUNPARAM=b
 
 opam pin add ocaml-js-stdlib https://github.com/dannywillems/ocaml-js-stdlib.git
-
+opam update && opam upgrade -y
 # Test for make and make clean
 make && make clean
 

@@ -232,7 +232,7 @@ class globalization : Ojs.t ->
    [@@js.call "getLocaleName"]
 
     method date_to_string           :
-      Js_date.date                                                  ->
+      Js_date.t                                                     ->
       (parameter_string -> unit)                                    ->
       (unit -> unit)                                                ->
       ?options:(options_date [@js.default create_options_date ()])  ->
@@ -276,7 +276,7 @@ class globalization : Ojs.t ->
       unit
 
     method is_day_light_savings_time :
-      Js_date.date                                    ->
+      Js_date.t                                       ->
       (parameter_boolean -> unit)                     ->
       (unit -> unit)                                  ->
       unit
