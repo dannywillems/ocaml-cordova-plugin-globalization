@@ -1,1 +1,5 @@
+S test/test.ml
+S cordova_globalization.mli
+
 PKG gen_js_api
+PKG ocaml-js-stdlib
