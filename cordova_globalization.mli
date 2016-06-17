@@ -12,42 +12,13 @@ type selector =
   | Date_and_time [@js "date_and_time"]
   [@@js.enum]
 
-[@@@js.stop]
-val short : format_length
-val medium : format_length
-val long : format_length
-val full : format_length
-
-val s_date : selector
-val s_time : selector
-val s_date_and_time : selector
-[@@@js.start]
-
-[@@@js.implem
-let short = Short
-let medium = Medium
-let long = Long
-let full = Full
-
-let s_date = Date
-let s_time = Time
-let s_date_and_time = Date_and_time
-]
-
-class options_date : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method format_length  : format_length
-    method selector       : selector
-  end
-
+type options_date = private Ojs.t
 val create_options_date :
   ?format_length:(format_length [@js.default Short])  ->
   ?selector:(selector [@js.default Date_and_time])    ->
   unit                                                ->
   options_date
-  [@@js.builder]
+[@@js.builder]
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
@@ -61,37 +32,13 @@ type date_names_item =
   | Days [@js "days"]
   [@@js.enum]
 
-[@@@js.stop]
-val date_names_wide : date_names_type
-val date_names_narrow : date_names_type
-
-val date_names_months : date_names_item
-val date_names_days : date_names_item
-[@@@js.start]
-
-[@@@js.implem
-let date_names_wide = Wide
-let date_names_narrow = Narrow
-
-let date_names_months = Months
-let date_names_days = Days
-]
-
-class options_date_names : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method type_ : date_names_type
-    [@@js.get "type"]
-    method item : date_names_item
-  end
-
+type options_date_names = private Ojs.t
 val create_options_date_names :
   ?type_:(date_names_type [@js.default Wide])   ->
   ?item:(date_names_item [@js.default Months])  ->
   unit                                          ->
   options_date_names
-  [@@js.builder]
+[@@js.builder]
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
@@ -101,210 +48,194 @@ type number_type =
   | Currency [@js "currency"]
   [@@js.enum]
 
-[@@@js.stop]
-val number_pattern_decimal    : number_type
-val number_pattern_percent    : number_type
-val number_pattern_currency   : number_type
-[@@@js.start]
-
-[@@@js.implem
-let number_pattern_decimal  = Decimal
-let number_pattern_percent  = Percent
-let number_pattern_currency = Currency
-]
-
-class options_number_pattern : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method type_ : number_type
-    [@@js.get "type"]
-  end
-
+type options_number_pattern = private Ojs.t
 val create_options_number_pattern :
   ?type_:(number_type [@js.default Decimal]) ->
   unit                                                  ->
   options_number_pattern
+[@@js.builder]
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
-class parameter_number_pattern : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method pattern      : string
-    method symbol       : string
-    method fraction     : int
-    method rounding     : int
-    method positive     : string
-    method negative     : string
-    method decimal      : string
-    method grouping     : string
-  end
+type number_pattern = private Ojs.t
+val number_pattern              : number_pattern -> string
+[@@js.get "pattern"]
+val number_pattern_symbol       : number_pattern -> string
+[@@js.get "symbol"]
+val number_pattern_fraction     : number_pattern -> int
+[@@js.get "fraction"]
+val number_pattern_rounding     : number_pattern -> int
+[@@js.get "rounding"]
+val number_pattern_positive     : number_pattern -> string
+[@@js.get "positive"]
+val number_pattern_negative     : number_pattern -> string
+[@@js.get "negative"]
+val number_pattern_decimal      : number_pattern -> string
+[@@js.get "decimal"]
+val number_pattern_grouping     : number_pattern -> string
+[@@js.get "grouping"]
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
-class parameter_date_pattern : Ojs.t ->
-  object
-    inherit Ojs.obj
+type date_pattern = private Ojs.t
 
-    method pattern : string
-    method timezone : string
-    method utc_offset : int
-    [@@js.get "utc_offset"]
-    method dst_offset : int
-    [@@js.get "dst_offset"]
-  end
+val date_pattern : date_pattern -> string
+[@@js.get "pattern"]
+val date_pattern_timezone : date_pattern -> string
+[@@js.get "timezone"]
+val date_pattern_utc_offset : date_pattern -> int
+[@@js.get "utc_offset"]
+val date_pattern_dst_offset : date_pattern -> int
+[@@js.get "dst_offset"]
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
-class parameter_boolean : Ojs.t ->
-  object
-    inherit Ojs.obj
+type boolean = private Ojs.t
 
-    method dst : bool
-  end
+val boolean_dst : boolean -> bool
+[@@js.get "dst"]
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
-class parameter_string : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method value : string
-  end
-
-class parameter_number : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method value : float
-  end
-
-class parameter_string_array : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method value : string array
-  end
-
-class parameter_currency_pattern : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method pattern  : string
-    method code     : string
-    method fraction : int
-    method rounding : int
-    method decimal  : string
-    method grouping : string
-  end
-
-class parameter_date : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method year         : int
-    method month        : int
-    method day          : int
-    method hour         : int
-    method minute       : int
-    method second       : int
-    method millisecond  : int
-  end
+type l_string = private Ojs.t
+val string_value : l_string -> string
+[@@js.get "value"]
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
-class globalization : Ojs.t ->
-  object
-    inherit Ojs.obj
-
-    method get_preferred_language   :
-      (parameter_string -> unit)  ->
-      (unit -> unit)              ->
-      unit
-   [@@js.call "getPreferredLanguage"]
-
-    method get_locale_name :
-      (parameter_string -> unit)  ->
-      (unit -> unit)              ->
-      unit
-   [@@js.call "getLocaleName"]
-
-    method date_to_string           :
-      Js_date.t                                                     ->
-      (parameter_string -> unit)                                    ->
-      (unit -> unit)                                                ->
-      ?options:(options_date [@js.default create_options_date ()])  ->
-      unit                                                          ->
-      unit
-
-    method get_currency_pattern :
-      string                                ->
-      (parameter_currency_pattern -> unit)  ->
-      (unit -> unit)                        ->
-      unit
-    [@@js.call "getCurrencyPattern"]
-
-    method get_date_names           :
-      (parameter_string_array -> unit)  ->
-      (unit -> unit)                    ->
-      options_date_names                ->
-      unit
-    [@@js.call "getDateNames"]
-
-    method get_date_pattern :
-      (parameter_date_pattern -> unit)                              ->
-      (unit -> unit)                                                ->
-      ?options:(options_date [@js.default create_options_date ()])  ->
-      unit                                                          ->
-      unit
-    [@@js.call "getDatePattern"]
-
-    method get_first_day_of_week    :
-      (parameter_number -> unit) ->
-      (unit -> unit)          ->
-      unit
-    [@@js.call "getFirstDayOfWeek"]
-
-    method get_number_pattern       :
-      (parameter_number_pattern -> unit)              ->
-      (unit -> unit)                                  ->
-      ?options:(options_number_pattern [@js.default
-        create_options_number_pattern ()])            ->
-      unit                                            ->
-      unit
-
-    method is_day_light_savings_time :
-      Js_date.t                                       ->
-      (parameter_boolean -> unit)                     ->
-      (unit -> unit)                                  ->
-      unit
-
-    method number_to_string :
-      int                                             ->
-      (parameter_string -> unit)                      ->
-      (unit -> unit)                                  ->
-      number_type                                     ->
-      unit
-
-    method string_to_number :
-      int                                             ->
-      (parameter_number -> unit)                      ->
-      (unit -> unit)                                  ->
-      number_type                                     ->
-      unit
-
-    method string_to_date :
-      string                                          ->
-      (parameter_date -> unit)                        ->
-      (unit -> unit)                                  ->
-      options_date                                    ->
-      unit
-  end
+type number = private Ojs.t
+val number_value : number -> float
+[@@js.get "value"]
 (* -------------------------------------------------------------------------- *)
 
 (* -------------------------------------------------------------------------- *)
-val t : unit -> globalization
-[@@js.get "navigator.globalization"]
+type string_array = private Ojs.t
+val string_array_value : string_array -> string array
+[@@js.get "value"]
+(* -------------------------------------------------------------------------- *)
+
+(* -------------------------------------------------------------------------- *)
+type currency_pattern = private Ojs.t
+val currency_pattern          : currency_pattern -> string
+[@@js.get "pattern"]
+val currency_pattern_code     : currency_pattern -> string
+[@@js.get "code"]
+val currency_pattern_fraction : currency_pattern -> int
+[@@js.get "fraction"]
+val currency_pattern_rounding : currency_pattern -> int
+[@@js.get "rounding"]
+val currency_pattern_decimal  : currency_pattern -> string
+[@@js.get "decimal"]
+val currency_pattern_grouping : currency_pattern -> string
+[@@js.get "grouping"]
+(* -------------------------------------------------------------------------- *)
+
+(* -------------------------------------------------------------------------- *)
+type date = private Ojs.t
+
+val date_year         : date -> int
+[@@js.get "year"]
+val date_month        : date -> int
+[@@js.get "month"]
+val date_day          : date -> int
+[@@js.get "day"]
+val date_hour         : date -> int
+[@@js.get "hour"]
+val date_minute       : date -> int
+[@@js.get "minute"]
+val date_second       : date -> int
+[@@js.get "second"]
+val date_millisecond  : date -> int
+[@@js.get "millisecond"]
+(* -------------------------------------------------------------------------- *)
+
+(* -------------------------------------------------------------------------- *)
+val get_preferred_language :
+  (l_string -> unit)                                            ->
+  (unit -> unit)                                                ->
+  unit
+[@@js.global "navigator.globalization.getPreferredLanguage"]
+
+val get_locale_name :
+  (l_string -> unit)                                            ->
+  (unit -> unit)                                                ->
+  unit
+[@@js.global "navigator.globalization.getLocaleName"]
+
+val date_to_string :
+  Js_date.t                                                     ->
+  (l_string -> unit)                                            ->
+  (unit -> unit)                                                ->
+  ?options:(options_date [@js.default create_options_date ()])  ->
+  unit                                                          ->
+  unit
+[@@js.global "navigator.globalization.dateToString"]
+
+val get_currency_pattern :
+  string                                                        ->
+  (currency_pattern -> unit)                                    ->
+  (unit -> unit)                                                ->
+  unit
+[@@js.global "navigator.globalization.getCurrencyPattern"]
+
+val get_date_names :
+  (string_array -> unit)                                        ->
+  (unit -> unit)                                                ->
+  options_date_names                                            ->
+  unit
+[@@js.global "navigator.globalization.getDateNames"]
+
+val get_date_pattern :
+  (date_pattern -> unit)                                                ->
+  (unit -> unit)                                                ->
+  ?options:(options_date [@js.default create_options_date ()])  ->
+  unit                                                          ->
+  unit
+[@@js.global "navigator.globalization.getDatePattern"]
+
+val get_first_day_of_week :
+  (number -> unit)                                              ->
+  (unit -> unit)                                                ->
+  unit
+[@@js.global "navigator.globalization.getFirstDayOfWeek"]
+
+val get_number_pattern :
+  (number -> unit)                                              ->
+  (unit -> unit)                                                ->
+  ?options:(options_number_pattern [@js.default
+    create_options_number_pattern ()])                          ->
+  unit                                                          ->
+  unit
+[@@js.global "navigator.globalization.getNumberPattern"]
+
+val is_day_light_savings_time :
+  Js_date.t                                                     ->
+  (boolean -> unit)                                             ->
+  (unit -> unit)                                                ->
+  unit
+[@@js.global "navigator.globalization.isDayLightSavingsTime"]
+
+val number_to_string :
+  int                                                           ->
+  (l_string -> unit)                                            ->
+  (unit -> unit)                                                ->
+  number_type                                                   ->
+  unit
+[@@js.global "navigator.globalization.numberToString"]
+
+val string_to_number :
+  int                                                           ->
+  (number -> unit)                                              ->
+  (unit -> unit)                                                ->
+  number_type                                                   ->
+  unit
+[@@js.global "navigator.globalization.stringToNumber"]
+
+val string_to_date :
+  string                                                        ->
+  (date -> unit)                                                ->
+  (unit -> unit)                                                ->
+  options_date                                                  ->
+  unit
+[@@js.global "navigator.globalization.stringToDate"]
 (* -------------------------------------------------------------------------- *)
