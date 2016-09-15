@@ -1,7 +1,7 @@
 opam-version: "1.2"
 name:         "ocaml-cordova-plugin-globalization"
 maintainer:   "Danny Willems <contact@danny-willems.be>"
-author:       "Danny Willems <contact@danny-willems.be>"
+author:       "Danny Willems <contact@danny-willems.be>, o-marshmallow"
 
 homepage:     "https://github.com/dannywillems/ocaml-cordova-plugin-globalization"
 bug-reports:  "https://github.com/dannywillems/ocaml-cordova-plugin-globalization/issues"
